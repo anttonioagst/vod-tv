@@ -1,0 +1,103 @@
+/* VodTV Design Tokens — Extraído do Figma via MCP */
+/* Gerado em: 2026-03-21 */
+/* Figma file: 2gbD3wnO3AaeyYnLMeyOUL */
+/* https://www.figma.com/design/2gbD3wnO3AaeyYnLMeyOUL/Vod.TV */
+
+:root {
+  /* ========================================
+     CORES
+     ======================================== */
+
+  /* Backgrounds */
+  --color-bg-primary: #0c0c0c;      /* Fundo principal da aplicação */
+  --color-bg-secondary: #191919;    /* Input fields, sidebar items hover */
+  --color-bg-elevated: #262626;     /* Search button, elementos elevados */
+  --color-bg-card: #19191a;         /* Channel cards */
+
+  /* Bordas */
+  --color-border-default: #3e3e3e;  /* Bordas gerais, bg de badges */
+  --color-border-subtle: #343434;   /* Divisores de seção na sidebar */
+
+  /* Textos */
+  --color-text-primary: #ffffff;    /* Títulos, texto principal */
+  --color-text-secondary: #bfbebe;  /* Nav items da sidebar */
+  --color-text-muted: #737373;      /* Nome do canal no video card */
+  --color-text-subtle: #a1a1a1;     /* @handle no channel card */
+
+  /* Accent */
+  --color-accent: #fdff79;          /* Botão primário CTA, texto badge Exclusivo */
+  --color-accent-foreground: #0c0c0c; /* Texto sobre fundo accent */
+
+  /* ========================================
+     TIPOGRAFIA
+     ======================================== */
+
+  /* Famílias */
+  --font-primary: 'Geist', sans-serif;               /* UI principal */
+  --font-secondary: 'Plus Jakarta Sans', sans-serif; /* Nome de canal */
+
+  /* Font sizes */
+  --text-2xs: 8px;    /* Badge "Exclusivo" */
+  --text-xs: 10px;    /* Duração do vídeo */
+  --text-sm: 12px;    /* Labels de seção, channel name, @handle */
+  --text-base: 14px;  /* Nav items, botões, título de vídeo */
+  --text-lg: 18px;    /* Títulos de seção (ex: "Canais Para Assistir") */
+
+  /* Font weights */
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+
+  /* ========================================
+     BORDER RADIUS
+     ======================================== */
+
+  --radius-xs: 3px;     /* Badges (duração, Exclusivo) */
+  --radius-sm: 6px;     /* Botão primário, Search bar */
+  --radius-md: 8px;     /* Avatar de canal na sidebar */
+  --radius-lg: 10px;    /* Nav item ativo, cards, thumbnails, avatares */
+  --radius-full: 9999px;
+
+  /* ========================================
+     LAYOUT
+     ======================================== */
+
+  --sidebar-width: 255px;
+  --header-height: 56px;
+
+  /* ========================================
+     SOMBRAS
+     ======================================== */
+
+  --shadow-button: 0px 1px 2px 0px rgba(255, 255, 255, 0.06);
+  --shadow-default: 0px 1px 2px 0px rgba(255, 255, 255, 0.06);
+
+  /* ========================================
+     COMPONENTES — DIMENSÕES FIXAS
+     ======================================== */
+
+  /* Video Card — Large */
+  --video-card-lg-width: 507px;
+  --video-card-lg-thumb-height: 285px;
+
+  /* Video Card — Medium */
+  --video-card-md-width: 376px;
+  --video-card-md-thumb-height: 211px;
+
+  /* Channel Card */
+  --channel-card-width: 140px;
+  --channel-card-avatar-size: 64px;
+
+  /* Video Card avatar */
+  --video-card-avatar-size: 37px;
+
+  /* Search Bar */
+  --search-bar-width: 568px;
+  --search-bar-height: 42px;
+
+  /* Icons */
+  --icon-size-sm: 12px;
+  --icon-size-base: 16px;
+  --icon-size-md: 20px;
+  --icon-size-lg: 36px;
+}
