@@ -14,7 +14,7 @@ export default async function WatchPage({ params }: WatchPageProps) {
   const related = mockVideos.filter((v) => v.id !== video.id).slice(0, 4)
 
   return (
-    <AppShell isLoggedIn={true} activePath="">
+    <AppShell isLoggedIn={false} activePath="">
       <div className="relative flex pt-4 px-4 overflow-hidden min-h-[800px]">
 
         {/* Área principal — paywall */}

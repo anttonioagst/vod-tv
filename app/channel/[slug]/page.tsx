@@ -25,7 +25,7 @@ export default async function ChannelPage({ params }: ChannelPageProps) {
   const videos = channelVideos.length > 0 ? channelVideos : mockVideos
 
   return (
-    <AppShell isLoggedIn={true} activePath="">
+    <AppShell isLoggedIn={false} activePath="">
       <div className="px-4 pt-4 flex flex-col">
         <ChannelHeader
           channel={channel}

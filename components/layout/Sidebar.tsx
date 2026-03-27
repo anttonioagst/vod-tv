@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import {
   Home,
   TrendingUp,
@@ -62,14 +63,9 @@ const FEATURED_CHANNELS: SidebarChannel[] = [
   { name: 'coringa', slug: 'coringa' },
 ]
 
-function NavLink({
-  item,
-  activePath,
-}: {
-  item: NavItem
-  activePath?: string
-}) {
-  const isActive = activePath === item.href
+function NavLink({ item }: { item: NavItem }) {
+  const pathname = usePathname()
+  const isActive = pathname === item.href
   const Icon = item.icon
 
   return (
@@ -109,7 +105,7 @@ export default function Sidebar({ isLoggedIn = false, activePath }: SidebarProps
           <SectionLabel>Explorar</SectionLabel>
           <nav className="flex flex-col gap-0.5">
             {EXPLORE_NAV.map((item) => (
-              <NavLink key={item.href} item={item} activePath={activePath} />
+              <NavLink key={item.href} item={item} />
             ))}
           </nav>
         </div>
@@ -122,7 +118,7 @@ export default function Sidebar({ isLoggedIn = false, activePath }: SidebarProps
             <SectionLabel>Você</SectionLabel>
             <nav className="flex flex-col gap-0.5">
               {YOU_NAV.map((item) => (
-                <NavLink key={item.href} item={item} activePath={activePath} />
+                <NavLink key={item.href} item={item} />
               ))}
             </nav>
           </div>
@@ -136,7 +132,7 @@ export default function Sidebar({ isLoggedIn = false, activePath }: SidebarProps
             <SectionLabel>Comunidade</SectionLabel>
             <nav className="flex flex-col gap-0.5">
               {COMMUNITY_NAV.map((item) => (
-                <NavLink key={item.href} item={item} activePath={activePath} />
+                <NavLink key={item.href} item={item} />
               ))}
             </nav>
           </div>
