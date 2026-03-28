@@ -3,6 +3,21 @@
     "vercel": {
       "type": "http",
       "url": "https://mcp.vercel.com"
+    },
+    "supabase": {
+      "type": "http",
+      "url": "https://mcp.supabase.com/mcp?project_ref=lyplbunxjertktddusug&features=...",
+      "headers": {
+        "Authorization": "Bearer sbp_bc89f23c04d39239401a6424bd4e1d8de151ff3c"
+      }
+    },
+    "mcp-server-supabase": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@supabase/mcp-server-supabase@latest", "--project-ref", "lyplbunxjertktddusug"],
+      "env": {
+        "SUPABASE_ACCESS_TOKEN": "sbp_bc89f23c04d39239401a6424bd4e1d8de151ff3c"
+      }
     }
   }
 }

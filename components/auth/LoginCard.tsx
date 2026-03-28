@@ -1,5 +1,8 @@
 'use client'
 
+import { useState } from 'react'
+import { createClient } from '@/lib/supabase/client'
+
 function GoogleIcon() {
   return (
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
@@ -20,6 +23,20 @@ function TwitchIcon() {
 }
 
 export default function LoginCard() {
+  const [loading, setLoading] = useState<'google' | 'twitch' | null>(null)
+
+  async function handleOAuth(provider: 'google' | 'twitch') {
+    setLoading(provider)
+    const supabase = createClient()
+    await supabase.auth.signInWithOAuth({
+      provider,
+      options: {
+        redirectTo: `${window.location.origin}/auth/callback`,
+      },
+    })
+    // Não resetar loading — a página vai redirecionar
+  }
+
   return (
     <div className="flex flex-col gap-[10px] items-center justify-center px-[171px] py-[74px]">
       {/* Bloco superior: logo + textos */}
@@ -46,23 +63,25 @@ export default function LoginCard() {
       <div className="flex flex-col gap-[12px] items-center w-[351px]">
         {/* Google */}
         <button
-          onClick={() => console.log('Google OAuth — implementar com NextAuth')}
-          className="w-full bg-surface-secondary border border-vod rounded-sm py-[11px] px-[100px] flex items-center justify-center gap-[10px] hover:border-accent transition-colors"
+          onClick={() => handleOAuth('google')}
+          disabled={loading !== null}
+          className="w-full bg-surface-secondary border border-vod rounded-sm py-[11px] px-[100px] flex items-center justify-center gap-[10px] hover:border-accent transition-colors disabled:opacity-50"
         >
           <GoogleIcon />
           <span className="font-semibold text-base text-white">
-            Entrar com Google
+            {loading === 'google' ? 'Redirecionando...' : 'Entrar com Google'}
           </span>
         </button>
 
         {/* Twitch */}
         <button
-          onClick={() => console.log('Twitch OAuth — implementar com NextAuth')}
-          className="w-full bg-surface-secondary border border-vod rounded-sm py-[11px] px-[100px] flex items-center justify-center gap-[10px] hover:border-[#9146FF] transition-colors"
+          onClick={() => handleOAuth('twitch')}
+          disabled={loading !== null}
+          className="w-full bg-surface-secondary border border-vod rounded-sm py-[11px] px-[100px] flex items-center justify-center gap-[10px] hover:border-[#9146FF] transition-colors disabled:opacity-50"
         >
           <TwitchIcon />
           <span className="font-semibold text-base text-white">
-            Entrar com Twitch
+            {loading === 'twitch' ? 'Redirecionando...' : 'Entrar com Twitch'}
           </span>
         </button>
       </div>
