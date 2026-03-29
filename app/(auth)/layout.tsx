@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import AppShell from '@/components/layout/AppShell'
+import { getFollowing } from '@/lib/supabase/queries/user-data'
 
 export default async function AuthLayout({
   children,
@@ -19,8 +20,15 @@ export default async function AuthLayout({
     avatar: user.user_metadata?.avatar_url ?? undefined,
   }
 
+  const followedChannels = await getFollowing(user.id)
+  const sidebarChannels = followedChannels.map((c) => ({
+    name: c.name,
+    slug: c.username.replace('@', ''),
+    avatar: c.avatar || undefined,
+  }))
+
   return (
-    <AppShell isLoggedIn user={appUser}>
+    <AppShell isLoggedIn user={appUser} followedChannels={sidebarChannels}>
       {children}
     </AppShell>
   )

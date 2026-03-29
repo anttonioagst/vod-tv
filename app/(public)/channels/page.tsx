@@ -2,9 +2,11 @@ import AppShell from '@/components/layout/AppShell'
 import PageHeader from '@/components/ui/PageHeader'
 import ChannelListItem from '@/components/channel/ChannelListItem'
 import { Tv } from 'lucide-react'
-import { mockChannels } from '@/lib/mock-data'
+import { getAllChannels } from '@/lib/supabase/queries/channels'
 
-export default function ChannelsPage() {
+export default async function ChannelsPage() {
+  const channels = await getAllChannels()
+
   return (
     <AppShell isLoggedIn={false} activePath="/channels">
       <div className="p-[16px]">
@@ -14,7 +16,7 @@ export default function ChannelsPage() {
           subtitle="Encontre e siga seus criadores favoritos"
         />
         <div className="flex flex-col">
-          {mockChannels.map((channel) => (
+          {channels.map((channel) => (
             <ChannelListItem key={channel.id} channel={channel} />
           ))}
         </div>

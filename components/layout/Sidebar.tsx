@@ -36,6 +36,7 @@ interface SidebarChannel {
 interface SidebarProps {
   isLoggedIn?: boolean
   activePath?: string
+  followedChannels?: SidebarChannel[]
 }
 
 const EXPLORE_NAV: NavItem[] = [
@@ -91,7 +92,10 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
   )
 }
 
-export default function Sidebar({ isLoggedIn = false, activePath }: SidebarProps) {
+export default function Sidebar({ isLoggedIn = false, activePath, followedChannels }: SidebarProps) {
+  const sidebarChannels = (isLoggedIn && followedChannels && followedChannels.length > 0)
+    ? followedChannels
+    : FEATURED_CHANNELS
   return (
     <aside className="w-[255px] h-screen flex flex-col bg-surface border-r border-vod overflow-y-auto shrink-0">
       {/* Logo */}
@@ -139,12 +143,12 @@ export default function Sidebar({ isLoggedIn = false, activePath }: SidebarProps
         </div>
       )}
 
-      {/* Explorar Canais */}
+      {/* Explorar Canais / Seguindo */}
       <div className="border-b border-vod-subtle">
         <div className="px-2 py-1">
-          <SectionLabel>Explorar canais</SectionLabel>
+          <SectionLabel>{isLoggedIn && followedChannels && followedChannels.length > 0 ? 'Seguindo' : 'Explorar canais'}</SectionLabel>
           <div className="flex flex-col gap-0.5">
-            {FEATURED_CHANNELS.map((channel) => (
+            {sidebarChannels.map((channel) => (
               <Link
                 key={channel.slug}
                 href={`/channel/${channel.slug}`}

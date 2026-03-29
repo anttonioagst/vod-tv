@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation'
 import AppShell from '@/components/layout/AppShell'
 import PaywallCard from '@/components/video/PaywallCard'
 import VideoCard from '@/components/video/VideoCard'
-import { mockVideos } from '@/lib/mock-data'
+import { getVideoById, getRelatedVideos } from '@/lib/supabase/queries/videos'
 
 interface WatchPageProps {
   params: Promise<{ id: string }>
@@ -11,10 +11,10 @@ interface WatchPageProps {
 export default async function WatchPage({ params }: WatchPageProps) {
   const { id } = await params
 
-  const video = mockVideos.find((v) => v.id === id)
-
+  const video = await getVideoById(id)
   if (!video) notFound()
-  const related = mockVideos.filter((v) => v.id !== video.id).slice(0, 4)
+
+  const related = await getRelatedVideos(video.channelId, video.id)
 
   return (
     <AppShell isLoggedIn={false} activePath="">

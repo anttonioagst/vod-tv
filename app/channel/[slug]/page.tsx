@@ -4,7 +4,8 @@ import ChannelHeader from '@/components/channel/ChannelHeader'
 import ChannelTabs from '@/components/channel/ChannelTabs'
 import ChannelVideoBar from '@/components/channel/ChannelVideoBar'
 import VideoGrid from '@/components/video/VideoGrid'
-import { mockChannels, mockVideos } from '@/lib/mock-data'
+import { getChannelBySlug } from '@/lib/supabase/queries/channels'
+import { getChannelVideos } from '@/lib/supabase/queries/videos'
 
 interface ChannelPageProps {
   params: Promise<{ slug: string }>
@@ -13,19 +14,10 @@ interface ChannelPageProps {
 export default async function ChannelPage({ params }: ChannelPageProps) {
   const { slug } = await params
 
-  // Busca canal pelo slug (username sem @)
-  const channel = mockChannels.find(
-    (c) => c.username.replace('@', '') === slug
-  )
-
+  const channel = await getChannelBySlug(slug)
   if (!channel) notFound()
 
-  // Vídeos do canal (mockados — futuramente filtrar por channelSlug)
-  const channelVideos = mockVideos.filter(
-    (v) => v.channelSlug === slug
-  )
-  // Se não tiver vídeos específicos do canal, mostra todos como exemplo
-  const videos = channelVideos.length > 0 ? channelVideos : mockVideos
+  const videos = await getChannelVideos(channel.id)
 
   return (
     <AppShell isLoggedIn={false} activePath="">
