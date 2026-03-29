@@ -24,17 +24,28 @@ function TwitchIcon() {
 
 export default function LoginCard() {
   const [loading, setLoading] = useState<'google' | 'twitch' | null>(null)
+  const [error, setError] = useState<string | null>(null)
 
   async function handleOAuth(provider: 'google' | 'twitch') {
     setLoading(provider)
-    const supabase = createClient()
-    await supabase.auth.signInWithOAuth({
-      provider,
-      options: {
-        redirectTo: `${window.location.origin}/auth/callback`,
-      },
-    })
-    // Não resetar loading — a página vai redirecionar
+    setError(null)
+    try {
+      const supabase = createClient()
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider,
+        options: {
+          redirectTo: `${window.location.origin}/auth/callback`,
+        },
+      })
+      if (error) {
+        setError('Erro ao entrar. Tente novamente.')
+        setLoading(null)
+      }
+      // Sem erro: página vai redirecionar, não resetar loading
+    } catch {
+      setError('Erro ao entrar. Tente novamente.')
+      setLoading(null)
+    }
   }
 
   return (
@@ -58,6 +69,11 @@ export default function LoginCard() {
           </p>
         </div>
       </div>
+
+      {/* Mensagem de erro */}
+      {error && (
+        <p className="text-red-400 text-sm text-center w-[351px]">{error}</p>
+      )}
 
       {/* Botões OAuth */}
       <div className="flex flex-col gap-[12px] items-center w-[351px]">

@@ -20,7 +20,7 @@ export default async function AuthLayout({
   }
 
   return (
-    <AppShell isLoggedIn activePath={undefined} user={appUser}>
+    <AppShell isLoggedIn user={appUser}>
       {children}
     </AppShell>
   )

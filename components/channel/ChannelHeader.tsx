@@ -13,7 +13,7 @@ export default function ChannelHeader({ channel, bannerUrl }: ChannelHeaderProps
     <div className="flex flex-col">
 
       {/* Banner */}
-      <div className="relative w-full h-[224px] rounded-[10px] overflow-hidden bg-[#191919]">
+      <div className="relative w-full h-[224px] rounded-lg overflow-hidden bg-surface-secondary">
         {bannerUrl && (
           <Image src={bannerUrl} alt="Banner" fill className="object-cover" />
         )}
@@ -24,7 +24,7 @@ export default function ChannelHeader({ channel, bannerUrl }: ChannelHeaderProps
 
         {/* Avatar flutuante */}
         <div className="absolute -top-[48px] left-0 w-[160px] h-[160px]
-                        rounded-[10px] overflow-hidden border-4 border-[#0c0c0c]
+                        rounded-md overflow-hidden border-4 border-surface
                         shrink-0">
           <Image
             src={channel.avatar}
@@ -39,29 +39,29 @@ export default function ChannelHeader({ channel, bannerUrl }: ChannelHeaderProps
 
         {/* Info + ações */}
         <div className="flex flex-col gap-[10px] p-[10px]">
-          <p className="font-geist font-bold text-[30px] text-white leading-none">
+          <p className="font-primary font-bold text-[30px] text-primary leading-none">
             {channel.name}
           </p>
           <div className="flex items-center gap-1">
-            <span className="font-geist font-medium text-[14px] text-[#737373]">
+            <span className="font-primary font-medium text-[14px] text-muted">
               {channel.username}
             </span>
-            <div className="w-[3px] h-[3px] rounded-full bg-[#737373]" />
-            <span className="font-geist font-medium text-[14px] text-[#737373]">
+            <div className="w-[3px] h-[3px] rounded-full bg-muted" />
+            <span className="font-primary font-medium text-[14px] text-muted">
               {channel.videoCount} vídeos
             </span>
           </div>
           <div className="flex items-center gap-2">
-            <button className="bg-[#fdff79] text-[#0c0c0c] rounded-[6px]
+            <button className="bg-accent text-accent-fg rounded-sm
                                px-4 py-[10px] flex items-center gap-2
-                               hover:bg-[#e8ea60] transition-colors">
+                               hover:opacity-90 transition-opacity">
               <Star size={16} />
-              <span className="font-geist font-bold text-[14px]">Assinar</span>
+              <span className="font-primary font-bold text-[14px]">Assinar</span>
             </button>
-            <button className="bg-[#191919] border border-[#3e3e3e] rounded-[6px]
+            <button className="bg-surface-secondary border border-vod rounded-sm
                                size-[36px] flex items-center justify-center
-                               hover:border-[#fdff79] transition-colors">
-              <Heart size={20} className="text-white" />
+                               hover:border-accent transition-colors">
+              <Heart size={20} className="text-primary" />
             </button>
           </div>
         </div>

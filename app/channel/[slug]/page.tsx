@@ -1,3 +1,4 @@
+import { notFound } from 'next/navigation'
 import AppShell from '@/components/layout/AppShell'
 import ChannelHeader from '@/components/channel/ChannelHeader'
 import ChannelTabs from '@/components/channel/ChannelTabs'
@@ -15,7 +16,9 @@ export default async function ChannelPage({ params }: ChannelPageProps) {
   // Busca canal pelo slug (username sem @)
   const channel = mockChannels.find(
     (c) => c.username.replace('@', '') === slug
-  ) ?? mockChannels[0]
+  )
+
+  if (!channel) notFound()
 
   // Vídeos do canal (mockados — futuramente filtrar por channelSlug)
   const channelVideos = mockVideos.filter(

@@ -14,14 +14,14 @@ export default function ChannelVideoBar() {
 
   return (
     <div className="flex items-center justify-between py-4">
-      <p className="font-geist font-semibold text-[18px] text-white">Conteúdo</p>
+      <p className="font-primary font-semibold text-[18px] text-primary">Conteúdo</p>
 
       <div className="flex items-center gap-2">
         {/* Search */}
-        <div className="bg-[#191919] border border-[#3e3e3e] rounded-[6px]
+        <div className="bg-surface-secondary border border-vod rounded-sm
                         px-3 py-2 flex items-center gap-2 min-w-[227px]">
-          <Search size={16} className="text-[#a1a1a1] shrink-0" />
-          <span className="font-geist font-medium text-[14px] text-[#a1a1a1]">
+          <Search size={16} className="text-subtle shrink-0" />
+          <span className="font-primary font-medium text-[14px] text-subtle">
             Buscar lives...
           </span>
         </div>
@@ -31,11 +31,11 @@ export default function ChannelVideoBar() {
           <button
             key={id}
             onClick={() => setActive(id)}
-            className={`flex items-center gap-2 px-4 py-[10px] rounded-[6px]
-                        font-geist font-bold text-[14px] transition-colors
+            className={`flex items-center gap-2 px-4 py-[10px] rounded-sm
+                        font-primary font-bold text-[14px] transition-colors
                         ${active === id
-                          ? 'bg-[#fdff79] text-[#0c0c0c]'
-                          : 'bg-[#262626] text-white hover:bg-[#333]'
+                          ? 'bg-accent text-accent-fg'
+                          : 'bg-surface-elevated text-primary hover:bg-vod'
                         }`}
           >
             <Icon size={16} />
