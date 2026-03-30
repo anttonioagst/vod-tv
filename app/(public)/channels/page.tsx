@@ -1,4 +1,3 @@
-import AppShell from '@/components/layout/AppShell'
 import PageHeader from '@/components/ui/PageHeader'
 import ChannelListItem from '@/components/channel/ChannelListItem'
 import { Tv } from 'lucide-react'
@@ -8,19 +7,17 @@ export default async function ChannelsPage() {
   const channels = await getAllChannels()
 
   return (
-    <AppShell isLoggedIn={false} activePath="/channels">
-      <div className="p-[16px]">
-        <PageHeader
-          icon={<Tv size={24} />}
-          title="Todos os Canais"
-          subtitle="Encontre e siga seus criadores favoritos"
-        />
-        <div className="flex flex-col">
-          {channels.map((channel) => (
-            <ChannelListItem key={channel.id} channel={channel} />
-          ))}
-        </div>
+    <div className="p-[16px]">
+      <PageHeader
+        icon={<Tv size={24} />}
+        title="Todos os Canais"
+        subtitle="Encontre e siga seus criadores favoritos"
+      />
+      <div className="flex flex-col">
+        {channels.map((channel) => (
+          <ChannelListItem key={channel.id} channel={channel} />
+        ))}
       </div>
-    </AppShell>
+    </div>
   )
 }
