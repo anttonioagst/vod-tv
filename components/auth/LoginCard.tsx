@@ -31,11 +31,12 @@ export default function LoginCard() {
     setError(null)
     try {
       const supabase = createClient()
+      const redirectTo = process.env.NODE_ENV === 'production'
+        ? 'https://vod-tv.vercel.app/auth/callback'
+        : 'http://localhost:3000/auth/callback'
       const { error } = await supabase.auth.signInWithOAuth({
         provider,
-        options: {
-          redirectTo: `${window.location.origin}/auth/callback`,
-        },
+        options: { redirectTo },
       })
       if (error) {
         setError('Erro ao entrar. Tente novamente.')
