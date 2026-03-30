@@ -1,3 +1,5 @@
+'use server'
+
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 
@@ -20,8 +22,6 @@ export async function getAffiliateApplication(userId: string) {
 export async function submitAffiliateApplication(
   formData: FormData
 ): Promise<{ error: 'already_applied' | 'submit_failed' } | undefined> {
-  'use server'
-
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
