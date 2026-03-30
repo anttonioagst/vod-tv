@@ -12,7 +12,8 @@
       "mcp__mcp-server-supabase__list_projects",
       "mcp__mcp-server-supabase__get_project",
       "mcp__mcp-server-supabase__list_tables",
-      "mcp__mcp-server-supabase__get_publishable_keys"
+      "mcp__mcp-server-supabase__get_publishable_keys",
+      "Bash(curl -s -H \"Authorization: Bearer sbp_f2c694ba738f957d4bf7b8d275096cef0b4338d3\" \"https://api.supabase.com/v1/projects/lyplbunxjertktddusug\")"
     ],
     "ask": [
       "Bash(git commit*)",
