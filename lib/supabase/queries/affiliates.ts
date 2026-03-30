@@ -17,7 +17,9 @@ export async function getAffiliateApplication(userId: string) {
   }
 }
 
-export async function submitAffiliateApplication(formData: FormData) {
+export async function submitAffiliateApplication(
+  formData: FormData
+): Promise<{ error: 'already_applied' | 'submit_failed' } | undefined> {
   'use server'
 
   const supabase = await createClient()
@@ -39,9 +41,7 @@ export async function submitAffiliateApplication(formData: FormData) {
     })
 
   if (error) {
-    if (error.code === '23505') redirect('/affiliates?error=already_applied')
-    throw error
+    if (error.code === '23505') return { error: 'already_applied' }
+    return { error: 'submit_failed' }
   }
-
-  redirect('/affiliates?success=true')
 }

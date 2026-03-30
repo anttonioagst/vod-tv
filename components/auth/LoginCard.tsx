@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { X } from 'lucide-react'
 import { createClient } from '@/lib/supabase/client'
 
 function GoogleIcon() {
@@ -22,13 +23,26 @@ function TwitchIcon() {
   )
 }
 
-export default function LoginCard() {
+const URL_ERROR_MESSAGES: Record<string, string> = {
+  auth: 'Não foi possível entrar. Tente novamente.',
+  no_code: 'Houve um problema com a autenticação. Tente novamente.',
+}
+
+interface LoginCardProps {
+  urlError?: string
+}
+
+export default function LoginCard({ urlError }: LoginCardProps) {
   const [loading, setLoading] = useState<'google' | 'twitch' | null>(null)
-  const [error, setError] = useState<string | null>(null)
+  const [oauthError, setOauthError] = useState<string | null>(null)
+  const [bannerDismissed, setBannerDismissed] = useState(false)
+
+  const urlErrorMessage = urlError && !bannerDismissed ? URL_ERROR_MESSAGES[urlError] : null
 
   async function handleOAuth(provider: 'google' | 'twitch') {
     setLoading(provider)
-    setError(null)
+    setOauthError(null)
+    setBannerDismissed(true) // Clear URL error banner when user tries again
     try {
       const supabase = createClient()
       const redirectTo = process.env.NODE_ENV === 'production'
@@ -39,12 +53,11 @@ export default function LoginCard() {
         options: { redirectTo },
       })
       if (error) {
-        setError('Erro ao entrar. Tente novamente.')
+        setOauthError('Erro ao entrar. Tente novamente.')
         setLoading(null)
       }
-      // Sem erro: página vai redirecionar, não resetar loading
     } catch {
-      setError('Erro ao entrar. Tente novamente.')
+      setOauthError('Erro ao entrar. Tente novamente.')
       setLoading(null)
     }
   }
@@ -53,14 +66,11 @@ export default function LoginCard() {
     <div className="flex flex-col gap-[10px] items-center justify-center px-[171px] py-[74px]">
       {/* Bloco superior: logo + textos */}
       <div className="flex flex-col gap-[12px] items-center pb-[32px]">
-        {/* Logo placeholder */}
         <div className="w-[237px] h-[170px] bg-white rounded-[16px] flex items-center justify-center">
           <span className="font-bold text-[32px] text-black">
             VOD<span className="text-[16px] align-super">TV</span>
           </span>
         </div>
-
-        {/* Textos */}
         <div className="flex flex-col items-center">
           <p className="font-bold text-[24px] text-white pb-[8px] text-center">
             Bem Vindo à Vod TV!
@@ -71,14 +81,27 @@ export default function LoginCard() {
         </div>
       </div>
 
-      {/* Mensagem de erro */}
-      {error && (
-        <p className="text-red-400 text-sm text-center w-[351px]">{error}</p>
+      {/* Banner de erro da URL (vindo do callback) */}
+      {urlErrorMessage && (
+        <div className="w-[351px] bg-red-500/10 border border-red-500/30 rounded-sm px-4 py-3 flex items-center justify-between gap-3">
+          <span className="text-red-300 text-base">{urlErrorMessage}</span>
+          <button
+            onClick={() => setBannerDismissed(true)}
+            className="text-muted hover:text-secondary transition-colors shrink-0"
+            aria-label="Fechar"
+          >
+            <X size={16} />
+          </button>
+        </div>
+      )}
+
+      {/* Erro do OAuth client-side */}
+      {oauthError && (
+        <p className="text-red-300 text-sm text-center w-[351px]">{oauthError}</p>
       )}
 
       {/* Botões OAuth */}
       <div className="flex flex-col gap-[12px] items-center w-[351px]">
-        {/* Google */}
         <button
           onClick={() => handleOAuth('google')}
           disabled={loading !== null}
@@ -90,7 +113,6 @@ export default function LoginCard() {
           </span>
         </button>
 
-        {/* Twitch */}
         <button
           onClick={() => handleOAuth('twitch')}
           disabled={loading !== null}
