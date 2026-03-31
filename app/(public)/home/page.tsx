@@ -4,7 +4,7 @@ import { Tv } from 'lucide-react'
 import { getHomeVideos } from '@/lib/supabase/queries/videos'
 import { getFeaturedChannels } from '@/lib/supabase/queries/channels'
 
-export default async function AuthHomePage() {
+export default async function HomePage() {
   const [videos, channels] = await Promise.all([
     getHomeVideos(),
     getFeaturedChannels(8),
