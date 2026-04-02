@@ -1,6 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { Channel } from '@/lib/types'
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function mapChannel(row: any): Channel {
   return {
     id: row.id,

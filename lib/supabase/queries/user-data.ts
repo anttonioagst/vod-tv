@@ -1,6 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { Video, Channel, formatDuration } from '@/lib/types'
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function mapVideoFromJoin(row: any): Video {
   const v = row.videos
   const c = v?.channels
@@ -20,6 +21,7 @@ function mapVideoFromJoin(row: any): Video {
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function mapChannelFromJoin(row: any): Channel {
   const c = row.channels
   return {

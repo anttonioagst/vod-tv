@@ -1,4 +1,5 @@
-import { Star, Lock } from 'lucide-react'
+import { Star } from 'lucide-react'
+import SvgIcon from '@/components/ui/SvgIcon'
 
 interface PaywallCardProps {
   channelName: string
@@ -11,7 +12,7 @@ export default function PaywallCard({ channelName }: PaywallCardProps) {
       {/* Ícone cadeado */}
       <div className="bg-accent/5 rounded-[100px] w-[65px] h-[64px]
                       flex items-center justify-center">
-        <Lock size={32} className="text-accent" />
+        <SvgIcon src="/icons/lock.svg" size={32} className="text-accent" />
       </div>
 
       {/* Textos */}

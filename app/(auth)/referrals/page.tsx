@@ -5,6 +5,8 @@ import EmptyState from '@/components/ui/EmptyState'
 import { Gift } from 'lucide-react'
 import { getReferrals } from '@/lib/supabase/queries/user-data'
 
+type Referral = { id: string; referred_id: string; status: string }
+
 export default async function ReferralsPage() {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
@@ -21,7 +23,7 @@ export default async function ReferralsPage() {
       />
       {referrals.length > 0 ? (
         <div className="flex flex-col gap-3 mt-4">
-          {referrals.map((referral: any) => (
+          {referrals.map((referral: Referral) => (
             <div
               key={referral.id}
               className="bg-surface-card border border-vod rounded-lg px-4 py-3 flex items-center justify-between"

@@ -7,7 +7,17 @@ export async function GET(request: Request) {
   const code = searchParams.get('code')
   const next = searchParams.get('next') ?? '/home'
 
+  // Captura erros retornados pelo provider OAuth ou pelo Supabase
+  const oauthError = searchParams.get('error')
+  const oauthErrorDescription = searchParams.get('error_description')
+
+  if (oauthError) {
+    console.error('[auth/callback] OAuth error:', oauthError, oauthErrorDescription)
+    return NextResponse.redirect(`${origin}/login?error=auth`)
+  }
+
   if (!code) {
+    console.error('[auth/callback] No code in URL. Params:', Object.fromEntries(searchParams))
     return NextResponse.redirect(`${origin}/login?error=no_code`)
   }
 
@@ -33,7 +43,7 @@ export async function GET(request: Request) {
   const { error } = await supabase.auth.exchangeCodeForSession(code)
 
   if (error) {
-    console.error('Auth callback error:', error.message)
+    console.error('[auth/callback] exchangeCodeForSession error:', error.message)
     return NextResponse.redirect(`${origin}/login?error=auth`)
   }
 

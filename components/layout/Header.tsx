@@ -2,9 +2,17 @@
 
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import { Search, Settings, LogIn, Bell, ChevronRight, User, Cog, LogOut, Palette, Globe } from 'lucide-react'
+import { Bell, ChevronRight, User, Palette, Globe } from 'lucide-react'
 import { useState, useRef, useEffect } from 'react'
 import { createClient } from '@/lib/supabase/client'
+import SvgIcon from '@/components/ui/SvgIcon'
+
+type IconProps = { size?: number; className?: string }
+
+const SearchIcon   = ({ size = 16, className }: IconProps) => <SvgIcon src="/icons/search.svg"   size={size} className={className} />
+const SettingsIcon = ({ size = 16, className }: IconProps) => <SvgIcon src="/icons/settings.svg" size={size} className={className} />
+const SignInIcon   = ({ size = 16, className }: IconProps) => <SvgIcon src="/icons/sign-in.svg"  size={size} className={className} />
+const SignOutIcon  = ({ size = 16, className }: IconProps) => <SvgIcon src="/icons/sign-out.svg" size={size} className={className} />
 
 interface HeaderProps {
   isLoggedIn?: boolean
@@ -42,8 +50,8 @@ export default function Header({ isLoggedIn = false, user }: HeaderProps) {
           placeholder="Pesquisar"
           className="flex-1 h-full bg-surface-secondary border border-vod border-r-0 rounded-l-sm px-3 text-base font-medium text-white placeholder:text-vod focus:outline-none"
         />
-        <button className="bg-surface-elevated border border-vod border-l-0 rounded-r-sm px-6 flex items-center justify-center">
-          <Search size={16} className="text-vod" />
+        <button className="bg-surface-elevated border border-vod border-l-0 rounded-r-sm px-6 flex items-center justify-center text-vod">
+          <SearchIcon size={16} />
         </button>
       </div>
 
@@ -51,8 +59,8 @@ export default function Header({ isLoggedIn = false, user }: HeaderProps) {
       <div className="flex items-center gap-2">
         {isLoggedIn ? (
           <>
-            <button className="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-vod transition-colors">
-              <Bell size={16} className="text-secondary" />
+            <button className="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-vod transition-colors text-secondary">
+              <Bell size={16} />
             </button>
 
             <div ref={menuRef} className="relative">
@@ -97,7 +105,7 @@ export default function Header({ isLoggedIn = false, user }: HeaderProps) {
                     onClick={() => { setMenuOpen(false); router.push('/settings') }}
                     className="w-full flex items-center gap-2.5 px-4 py-2.5 text-secondary text-base hover:bg-surface-elevated transition-colors"
                   >
-                    <Cog size={16} className="text-muted shrink-0" />
+                    <SettingsIcon size={16} className="text-muted" />
                     <span>Configurações</span>
                   </button>
                   <div className="h-px bg-vod-subtle mx-2 my-1" />
@@ -105,7 +113,7 @@ export default function Header({ isLoggedIn = false, user }: HeaderProps) {
                     onClick={handleLogout}
                     className="w-full flex items-center gap-2.5 px-4 py-2.5 text-red-400 text-base hover:bg-surface-elevated transition-colors"
                   >
-                    <LogOut size={16} className="text-red-400 shrink-0" />
+                    <SignOutIcon size={16} />
                     <span>Sair</span>
                   </button>
                 </div>
@@ -114,14 +122,14 @@ export default function Header({ isLoggedIn = false, user }: HeaderProps) {
           </>
         ) : (
           <>
-            <button className="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-vod transition-colors">
-              <Settings size={16} className="text-secondary" />
+            <button className="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-vod transition-colors text-secondary">
+              <SettingsIcon size={16} />
             </button>
             <button
               onClick={() => router.push('/login')}
               className="flex items-center gap-2 bg-accent text-accent-fg rounded-sm px-[17px] py-[9px] text-base font-bold shadow-[0px_1px_2px_0px_rgba(255,255,255,0.06)] hover:brightness-95 transition-all"
             >
-              <LogIn size={16} />
+              <SignInIcon size={16} />
               <span>Entrar</span>
             </button>
           </>
