@@ -97,7 +97,7 @@ export default function Sidebar({ isLoggedIn = false, followedChannels }: Sideba
     <aside className="w-[255px] h-screen flex flex-col bg-surface border-r border-vod overflow-y-auto shrink-0">
       {/* Logo */}
       <div className="p-4 flex items-center">
-        <Image src="/icons/vod-logo.svg" alt="Vod TV" width={46} height={32} />
+        <Image src="/icons/vod-logo.svg" alt="Vod TV" width={52} height={36} />
       </div>
 
       {/* Explorar */}
@@ -144,7 +144,7 @@ export default function Sidebar({ isLoggedIn = false, followedChannels }: Sideba
       <div className="border-b border-vod-subtle">
         <div className="px-2 py-1">
           <SectionLabel>
-            {isLoggedIn && followedChannels && followedChannels.length > 0 ? 'Seguindo' : 'Explorar canais'}
+            {isLoggedIn && followedChannels && followedChannels.length > 0 ? 'Seguindo' : 'Explorar'}
           </SectionLabel>
           <div className="flex flex-col gap-0.5">
             {sidebarChannels.map((channel) => (
@@ -157,7 +157,7 @@ export default function Sidebar({ isLoggedIn = false, followedChannels }: Sideba
                 <span className="text-white text-base font-medium truncate">{channel.name}</span>
               </Link>
             ))}
-            <button className="flex items-center gap-2 p-2 w-full rounded-lg hover:bg-vod transition-colors text-secondary text-base font-medium">
+            <button className="flex items-center gap-2 p-2 w-full rounded-lg hover:bg-vod transition-colors text-secondary text-base font-medium cursor-pointer">
               <MoreListIcon size={16} />
               <span>Mostrar Mais</span>
             </button>
@@ -188,16 +188,16 @@ export default function Sidebar({ isLoggedIn = false, followedChannels }: Sideba
             className="flex items-center gap-2 p-2 w-full rounded-lg hover:bg-vod transition-colors text-secondary text-base font-medium"
           >
             <GuidelinesIcon size={16} />
-            <span>Diretrizes</span>
+            <span>Diretrizes da Comunidade</span>
           </a>
           <a
             href="#"
             className="flex items-center gap-2 p-2 w-full rounded-lg hover:bg-vod transition-colors text-secondary text-base font-medium"
           >
             <CopyrightIcon size={16} />
-            <span>DMCA</span>
+            <span>Direitos Autorais/DMCA</span>
           </a>
-          <button className="flex items-center gap-2 p-2 w-full rounded-lg hover:bg-vod transition-colors text-secondary text-base font-medium">
+          <button className="flex items-center gap-2 p-2 w-full rounded-lg hover:bg-vod transition-colors text-secondary text-base font-medium cursor-pointer">
             <ChevronsUpDown size={16} />
             <span>Expandir/Recolher</span>
           </button>
