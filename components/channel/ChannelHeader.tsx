@@ -24,7 +24,7 @@ export default function ChannelHeader({ channel, bannerUrl }: ChannelHeaderProps
 
         {/* Avatar flutuante */}
         <div className="absolute -top-[48px] left-0 w-[160px] h-[160px]
-                        rounded-md overflow-hidden border-4 border-surface
+                        rounded-lg overflow-hidden border-4 border-surface
                         shrink-0">
           <Image
             src={channel.avatar}
@@ -54,13 +54,15 @@ export default function ChannelHeader({ channel, bannerUrl }: ChannelHeaderProps
           <div className="flex items-center gap-2">
             <button className="bg-accent text-accent-fg rounded-sm
                                px-4 py-[10px] flex items-center gap-2
-                               hover:opacity-90 transition-opacity">
+                               hover:opacity-90 transition-opacity duration-150 ease-out
+                               focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50">
               <Star size={16} />
               <span className="font-primary font-bold text-[14px]">Assinar</span>
             </button>
             <button className="bg-surface-secondary border border-vod rounded-sm
                                size-[36px] flex items-center justify-center
-                               hover:border-accent transition-colors">
+                               hover:border-accent transition-colors duration-150 ease-out
+                               focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50">
               <Heart size={20} className="text-primary" />
             </button>
           </div>

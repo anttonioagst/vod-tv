@@ -32,7 +32,8 @@ export default function ChannelVideoBar() {
             key={id}
             onClick={() => setActive(id)}
             className={`flex items-center gap-2 px-4 py-[10px] rounded-sm
-                        font-primary font-bold text-[14px] transition-colors
+                        font-primary font-bold text-[14px] transition-colors duration-150 ease-out
+                        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50
                         ${active === id
                           ? 'bg-accent text-accent-fg'
                           : 'bg-surface-elevated text-primary hover:bg-vod'

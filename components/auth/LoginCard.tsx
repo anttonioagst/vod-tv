@@ -13,9 +13,10 @@ const URL_ERROR_MESSAGES: Record<string, string> = {
 
 interface LoginCardProps {
   urlError?: string
+  className?: string
 }
 
-export default function LoginCard({ urlError }: LoginCardProps) {
+export default function LoginCard({ urlError, className }: LoginCardProps) {
   const [loading, setLoading] = useState<'google' | 'twitch' | null>(null)
   const [oauthError, setOauthError] = useState<string | null>(null)
   const [bannerDismissed, setBannerDismissed] = useState(false)
@@ -46,10 +47,10 @@ export default function LoginCard({ urlError }: LoginCardProps) {
   }
 
   return (
-    <div className="flex flex-col gap-[10px] items-center justify-center px-[171px] py-[74px]">
+    <div className={`flex flex-col gap-[10px] items-center justify-center overflow-clip px-[171px] py-[74px]${className ? ` ${className}` : ''}`}>
       {/* Bloco superior: logo + textos */}
       <div className="flex flex-col gap-[12px] items-center pb-[32px]">
-        <div className="w-[237px] h-[170px] bg-surface-secondary rounded-[16px] flex items-center justify-center">
+        <div className="w-[237px] h-[170px] bg-surface-secondary rounded-2xl flex items-center justify-center">
           <Image src="/icons/vod-logo.svg" alt="Vod TV" width={138} height={96} className="object-contain" />
         </div>
         <div className="flex flex-col items-center">
@@ -86,7 +87,7 @@ export default function LoginCard({ urlError }: LoginCardProps) {
         <button
           onClick={() => handleOAuth('google')}
           disabled={loading !== null}
-          className="w-full bg-surface-secondary border border-vod rounded-sm py-[11px] px-[100px] flex items-center justify-center gap-[10px] hover:border-accent transition-colors disabled:opacity-50 text-secondary"
+          className="w-full bg-surface-secondary border border-vod rounded-sm py-[11px] px-[100px] flex items-center justify-center gap-[10px] hover:border-accent transition-colors duration-150 ease-out disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50"
         >
           <SvgIcon src="/icons/google.svg" size={16} />
           <span className="font-semibold text-base text-white">
@@ -97,7 +98,7 @@ export default function LoginCard({ urlError }: LoginCardProps) {
         <button
           onClick={() => handleOAuth('twitch')}
           disabled={loading !== null}
-          className="w-full bg-surface-secondary border border-vod rounded-sm py-[11px] px-[100px] flex items-center justify-center gap-[10px] hover:border-[#9146FF] transition-colors disabled:opacity-50 text-[#9146FF]"
+          className="w-full bg-surface-secondary border border-vod rounded-sm py-[11px] px-[100px] flex items-center justify-center gap-[10px] hover:border-twitch transition-colors duration-150 ease-out disabled:opacity-50 text-twitch focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-twitch/50"
         >
           <SvgIcon src="/icons/twitch.svg" size={16} />
           <span className="font-semibold text-base text-white">

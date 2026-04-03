@@ -16,11 +16,11 @@ export default async function WatchPage({ params }: WatchPageProps) {
   const related = await getRelatedVideos(video.channelId, video.id)
 
   return (
-    <div className="relative flex pt-4 px-4 overflow-hidden min-h-[800px]">
+    <div className="relative flex pt-4 px-4 overflow-clip min-h-[800px]">
 
       {/* Área principal — paywall */}
       <div className="flex-1 pr-[403px]">
-        <div className="h-[800px] rounded-[10px] bg-[#171717]
+        <div className="h-[800px] rounded-lg bg-surface-player
                         flex flex-col items-center justify-center gap-3">
           <PaywallCard channelName={video.channelSlug} />
         </div>

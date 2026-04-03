@@ -17,12 +17,13 @@ export default function ChannelTabs({ defaultTab = 'Vídeos', onTabChange }: Cha
   }
 
   return (
-    <div className="flex gap-1 border-b border-vod">
+    <div className="flex gap-[5px] border-b border-vod">
       {TABS.map((tab) => (
         <button
           key={tab}
           onClick={() => handleTab(tab)}
-          className={`p-4 font-primary font-medium text-[14px] transition-colors
+          className={`p-4 font-primary font-medium text-[14px] transition-colors duration-150 ease-out
+                      focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent/50
                       ${active === tab
                         ? 'text-primary border-b-2 border-primary -mb-px'
                         : 'text-muted border-b border-muted -mb-px'

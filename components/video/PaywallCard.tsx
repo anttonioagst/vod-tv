@@ -3,11 +3,12 @@ import SvgIcon from '@/components/ui/SvgIcon'
 
 interface PaywallCardProps {
   channelName: string
+  className?: string
 }
 
-export default function PaywallCard({ channelName }: PaywallCardProps) {
+export default function PaywallCard({ channelName, className }: PaywallCardProps) {
   return (
-    <div className="flex flex-col items-center justify-center gap-3 w-full px-4">
+    <div className={`flex flex-col items-center justify-center gap-3 w-full px-4${className ? ` ${className}` : ''}`}>
 
       {/* Ícone cadeado */}
       <div className="bg-accent/5 rounded-[100px] w-[65px] h-[64px]
@@ -43,7 +44,8 @@ export default function PaywallCard({ channelName }: PaywallCardProps) {
           </div>
           <button className="bg-accent text-accent-fg px-4 py-[10px] rounded-sm
                              w-full flex items-center justify-center gap-2
-                             hover:opacity-90 transition-opacity">
+                             hover:opacity-90 transition-opacity duration-150 ease-out
+                             focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50">
             <Star size={16} />
             <span className="font-primary font-bold text-[14px]">Assinar</span>
           </button>
@@ -71,7 +73,8 @@ export default function PaywallCard({ channelName }: PaywallCardProps) {
           </div>
           <button className="bg-accent text-accent-fg px-4 py-[10px] rounded-sm
                              w-full flex items-center justify-center
-                             hover:opacity-90 transition-opacity">
+                             hover:opacity-90 transition-opacity duration-150 ease-out
+                             focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50">
             <span className="font-primary font-bold text-[14px]">Assinar global</span>
           </button>
         </div>

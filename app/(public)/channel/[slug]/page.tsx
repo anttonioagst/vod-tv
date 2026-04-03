@@ -19,7 +19,7 @@ export default async function ChannelPage({ params }: ChannelPageProps) {
   const videos = await getChannelVideos(channel.id)
 
   return (
-    <div className="px-4 pt-4 flex flex-col">
+    <div className="px-4 pt-4 flex flex-col overflow-clip">
       <ChannelHeader
         channel={channel}
         bannerUrl={`https://picsum.photos/seed/${slug}-banner/1633/224`}

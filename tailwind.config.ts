@@ -34,6 +34,12 @@ const config: Config = {
           DEFAULT: '#fdff79',
           fg: '#0c0c0c',
         },
+
+        // Brand colors de terceiros
+        twitch: '#9146FF',
+
+        // Superfícies especiais
+        'surface-player': '#171717',
       },
       fontFamily: {
         primary: ['Geist', 'sans-serif'],

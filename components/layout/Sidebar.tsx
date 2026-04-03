@@ -35,6 +35,7 @@ interface SidebarChannel {
 interface SidebarProps {
   isLoggedIn?: boolean
   followedChannels?: SidebarChannel[]
+  className?: string
 }
 
 const EXPLORE_NAV: NavItem[] = [
@@ -70,7 +71,7 @@ function NavLink({ item }: { item: NavItem }) {
   return (
     <Link
       href={item.href}
-      className={`flex items-center gap-2 p-2 w-full text-secondary text-base font-medium transition-colors rounded-lg ${
+      className={`flex items-center gap-2 p-2 w-full text-secondary text-base font-medium transition-colors duration-150 ease-out rounded-lg focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-vod ${
         isActive ? 'bg-vod' : 'hover:bg-vod'
       }`}
     >
@@ -88,13 +89,13 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
   )
 }
 
-export default function Sidebar({ isLoggedIn = false, followedChannels }: SidebarProps) {
+export default function Sidebar({ isLoggedIn = false, followedChannels, className }: SidebarProps) {
   const sidebarChannels = (isLoggedIn && followedChannels && followedChannels.length > 0)
     ? followedChannels
     : FEATURED_CHANNELS
 
   return (
-    <aside className="w-[255px] h-screen flex flex-col bg-surface border-r border-vod overflow-y-auto shrink-0">
+    <aside className={`w-[255px] h-screen flex flex-col bg-surface border-r border-vod overflow-y-auto shrink-0${className ? ` ${className}` : ''}`}>
       {/* Logo */}
       <div className="p-4 flex items-center">
         <Image src="/icons/vod-logo.svg" alt="Vod TV" width={52} height={36} />
@@ -102,8 +103,7 @@ export default function Sidebar({ isLoggedIn = false, followedChannels }: Sideba
 
       {/* Explorar */}
       <div className="border-b border-vod-subtle">
-        <div className="px-2 py-1">
-          <SectionLabel>Explorar</SectionLabel>
+        <div className="p-2">
           <nav className="flex flex-col gap-0.5">
             {EXPLORE_NAV.map((item) => (
               <NavLink key={item.href} item={item} />
@@ -115,7 +115,7 @@ export default function Sidebar({ isLoggedIn = false, followedChannels }: Sideba
       {/* Você — só se logado */}
       {isLoggedIn && (
         <div className="border-b border-vod-subtle">
-          <div className="px-2 py-1">
+          <div className="p-2">
             <SectionLabel>Você</SectionLabel>
             <nav className="flex flex-col gap-0.5">
               {YOU_NAV.map((item) => (
@@ -129,7 +129,7 @@ export default function Sidebar({ isLoggedIn = false, followedChannels }: Sideba
       {/* Comunidade — só se logado */}
       {isLoggedIn && (
         <div className="border-b border-vod-subtle">
-          <div className="px-2 py-1">
+          <div className="p-2">
             <SectionLabel>Comunidade</SectionLabel>
             <nav className="flex flex-col gap-0.5">
               {COMMUNITY_NAV.map((item) => (
@@ -142,7 +142,7 @@ export default function Sidebar({ isLoggedIn = false, followedChannels }: Sideba
 
       {/* Explorar Canais / Seguindo */}
       <div className="border-b border-vod-subtle">
-        <div className="px-2 py-1">
+        <div className="p-2">
           <SectionLabel>
             {isLoggedIn && followedChannels && followedChannels.length > 0 ? 'Seguindo' : 'Explorar'}
           </SectionLabel>
@@ -151,13 +151,13 @@ export default function Sidebar({ isLoggedIn = false, followedChannels }: Sideba
               <Link
                 key={channel.slug}
                 href={`/channel/${channel.slug}`}
-                className="flex items-center gap-2 p-2 w-full rounded-lg hover:bg-vod transition-colors"
+                className="flex items-center gap-2 p-2 w-full rounded-lg hover:bg-vod transition-colors duration-150 ease-out focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-vod"
               >
                 <div className="w-[26px] h-[26px] rounded-md bg-secondary shrink-0" />
-                <span className="text-white text-base font-medium truncate">{channel.name}</span>
+                <span className="text-white text-base font-medium font-secondary truncate">{channel.name}</span>
               </Link>
             ))}
-            <button className="flex items-center gap-2 p-2 w-full rounded-lg hover:bg-vod transition-colors text-secondary text-base font-medium cursor-pointer">
+            <button className="flex items-center gap-2 p-2 w-full rounded-lg hover:bg-vod transition-colors duration-150 ease-out text-secondary text-base font-medium cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-vod">
               <MoreListIcon size={16} />
               <span>Mostrar Mais</span>
             </button>
@@ -166,38 +166,38 @@ export default function Sidebar({ isLoggedIn = false, followedChannels }: Sideba
       </div>
 
       {/* Contato */}
-      <div className="px-2 py-1">
+      <div className="p-2">
         <SectionLabel>Contato</SectionLabel>
         <div className="flex flex-col gap-0.5">
           <a
             href="mailto:contato@vod.tv"
-            className="flex items-center gap-2 p-2 w-full rounded-lg hover:bg-vod transition-colors text-secondary text-base font-medium"
+            className="flex items-center gap-2 p-2 w-full rounded-lg hover:bg-vod transition-colors duration-150 ease-out text-secondary text-base font-medium focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-vod"
           >
             <Mail size={16} />
             <span>contato@vod.tv</span>
           </a>
           <a
             href="#"
-            className="flex items-center gap-2 p-2 w-full rounded-lg hover:bg-vod transition-colors text-secondary text-base font-medium"
+            className="flex items-center gap-2 p-2 w-full rounded-lg hover:bg-vod transition-colors duration-150 ease-out text-secondary text-base font-medium focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-vod"
           >
             <DiscordIcon size={16} />
             <span>Discord</span>
           </a>
           <a
             href="#"
-            className="flex items-center gap-2 p-2 w-full rounded-lg hover:bg-vod transition-colors text-secondary text-base font-medium"
+            className="flex items-center gap-2 p-2 w-full rounded-lg hover:bg-vod transition-colors duration-150 ease-out text-secondary text-base font-medium focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-vod"
           >
             <GuidelinesIcon size={16} />
             <span>Diretrizes da Comunidade</span>
           </a>
           <a
             href="#"
-            className="flex items-center gap-2 p-2 w-full rounded-lg hover:bg-vod transition-colors text-secondary text-base font-medium"
+            className="flex items-center gap-2 p-2 w-full rounded-lg hover:bg-vod transition-colors duration-150 ease-out text-secondary text-base font-medium focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-vod"
           >
             <CopyrightIcon size={16} />
             <span>Direitos Autorais/DMCA</span>
           </a>
-          <button className="flex items-center gap-2 p-2 w-full rounded-lg hover:bg-vod transition-colors text-secondary text-base font-medium cursor-pointer">
+          <button className="flex items-center gap-2 p-2 w-full rounded-lg hover:bg-vod transition-colors duration-150 ease-out text-secondary text-base font-medium cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-vod">
             <ChevronsUpDown size={16} />
             <span>Expandir/Recolher</span>
           </button>
