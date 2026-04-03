@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -63,7 +64,7 @@ const FEATURED_CHANNELS: SidebarChannel[] = [
   { name: 'coringa', slug: 'coringa' },
 ]
 
-function NavLink({ item }: { item: NavItem }) {
+function NavLink({ item, isCollapsed }: { item: NavItem; isCollapsed: boolean }) {
   const pathname = usePathname()
   const isActive = pathname === item.href
   const Icon = item.icon
@@ -71,12 +72,13 @@ function NavLink({ item }: { item: NavItem }) {
   return (
     <Link
       href={item.href}
+      title={item.label}
       className={`flex items-center gap-2 p-2 w-full text-secondary text-base font-medium transition-colors duration-150 ease-out rounded-lg focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-vod ${
         isActive ? 'bg-vod' : 'hover:bg-vod'
       }`}
     >
       <Icon size={16} />
-      <span>{item.label}</span>
+      <span className={isCollapsed ? 'hidden' : 'block'}>{item.label}</span>
     </Link>
   )
 }
@@ -90,15 +92,17 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 }
 
 export default function Sidebar({ isLoggedIn = false, followedChannels, className }: SidebarProps) {
+  const [isCollapsed, setIsCollapsed] = useState(false)
+
   const sidebarChannels = (isLoggedIn && followedChannels && followedChannels.length > 0)
     ? followedChannels
     : FEATURED_CHANNELS
 
   return (
-    <aside className={`w-[255px] h-screen flex flex-col bg-surface border-r border-vod overflow-y-auto shrink-0${className ? ` ${className}` : ''}`}>
+    <aside className={`${isCollapsed ? 'w-[64px]' : 'w-[255px]'} transition-all duration-200 h-screen flex flex-col bg-surface border-r border-vod overflow-y-auto shrink-0${className ? ` ${className}` : ''}`}>
       {/* Logo */}
       <div className="p-4 flex items-center">
-        <Image src="/icons/vod-logo.svg" alt="Vod TV" width={52} height={36} />
+        {!isCollapsed && <Image src="/icons/vod-logo.svg" alt="Vod TV" width={52} height={36} />}
       </div>
 
       {/* Explorar */}
@@ -106,7 +110,7 @@ export default function Sidebar({ isLoggedIn = false, followedChannels, classNam
         <div className="p-2">
           <nav className="flex flex-col gap-0.5">
             {EXPLORE_NAV.map((item) => (
-              <NavLink key={item.href} item={item} />
+              <NavLink key={item.href} item={item} isCollapsed={isCollapsed} />
             ))}
           </nav>
         </div>
@@ -116,10 +120,10 @@ export default function Sidebar({ isLoggedIn = false, followedChannels, classNam
       {isLoggedIn && (
         <div className="border-b border-vod-subtle">
           <div className="p-2">
-            <SectionLabel>Você</SectionLabel>
+            {!isCollapsed && <SectionLabel>Você</SectionLabel>}
             <nav className="flex flex-col gap-0.5">
               {YOU_NAV.map((item) => (
-                <NavLink key={item.href} item={item} />
+                <NavLink key={item.href} item={item} isCollapsed={isCollapsed} />
               ))}
             </nav>
           </div>
@@ -130,10 +134,10 @@ export default function Sidebar({ isLoggedIn = false, followedChannels, classNam
       {isLoggedIn && (
         <div className="border-b border-vod-subtle">
           <div className="p-2">
-            <SectionLabel>Comunidade</SectionLabel>
+            {!isCollapsed && <SectionLabel>Comunidade</SectionLabel>}
             <nav className="flex flex-col gap-0.5">
               {COMMUNITY_NAV.map((item) => (
-                <NavLink key={item.href} item={item} />
+                <NavLink key={item.href} item={item} isCollapsed={isCollapsed} />
               ))}
             </nav>
           </div>
@@ -143,23 +147,31 @@ export default function Sidebar({ isLoggedIn = false, followedChannels, classNam
       {/* Explorar Canais / Seguindo */}
       <div className="border-b border-vod-subtle">
         <div className="p-2">
-          <SectionLabel>
-            {isLoggedIn && followedChannels && followedChannels.length > 0 ? 'Seguindo' : 'Explorar'}
-          </SectionLabel>
+          {!isCollapsed && (
+            <SectionLabel>
+              {isLoggedIn && followedChannels && followedChannels.length > 0 ? 'Seguindo' : 'Explorar'}
+            </SectionLabel>
+          )}
           <div className="flex flex-col gap-0.5">
             {sidebarChannels.map((channel) => (
               <Link
                 key={channel.slug}
                 href={`/channel/${channel.slug}`}
+                title={channel.name}
                 className="flex items-center gap-2 p-2 w-full rounded-lg hover:bg-vod transition-colors duration-150 ease-out focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-vod"
               >
                 <div className="w-[26px] h-[26px] rounded-md bg-secondary shrink-0" />
-                <span className="text-white text-base font-medium font-secondary truncate">{channel.name}</span>
+                {!isCollapsed && (
+                  <span className="text-white text-base font-medium font-secondary truncate">{channel.name}</span>
+                )}
               </Link>
             ))}
-            <button className="flex items-center gap-2 p-2 w-full rounded-lg hover:bg-vod transition-colors duration-150 ease-out text-secondary text-base font-medium cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-vod">
+            <button
+              title="Mostrar Mais"
+              className="flex items-center gap-2 p-2 w-full rounded-lg hover:bg-vod transition-colors duration-150 ease-out text-secondary text-base font-medium cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-vod"
+            >
               <MoreListIcon size={16} />
-              <span>Mostrar Mais</span>
+              {!isCollapsed && <span>Mostrar Mais</span>}
             </button>
           </div>
         </div>
@@ -167,39 +179,50 @@ export default function Sidebar({ isLoggedIn = false, followedChannels, classNam
 
       {/* Contato */}
       <div className="p-2">
-        <SectionLabel>Contato</SectionLabel>
+        {!isCollapsed && <SectionLabel>Contato</SectionLabel>}
         <div className="flex flex-col gap-0.5">
           <a
             href="mailto:contato@vod.tv"
+            title="contato@vod.tv"
             className="flex items-center gap-2 p-2 w-full rounded-lg hover:bg-vod transition-colors duration-150 ease-out text-secondary text-base font-medium focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-vod"
           >
             <Mail size={16} />
-            <span>contato@vod.tv</span>
+            {!isCollapsed && <span>contato@vod.tv</span>}
           </a>
           <a
             href="#"
+            title="Discord"
             className="flex items-center gap-2 p-2 w-full rounded-lg hover:bg-vod transition-colors duration-150 ease-out text-secondary text-base font-medium focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-vod"
           >
             <DiscordIcon size={16} />
-            <span>Discord</span>
+            {!isCollapsed && <span>Discord</span>}
           </a>
           <a
             href="#"
+            title="Diretrizes da Comunidade"
             className="flex items-center gap-2 p-2 w-full rounded-lg hover:bg-vod transition-colors duration-150 ease-out text-secondary text-base font-medium focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-vod"
           >
             <GuidelinesIcon size={16} />
-            <span>Diretrizes da Comunidade</span>
+            {!isCollapsed && <span>Diretrizes da Comunidade</span>}
           </a>
           <a
             href="#"
+            title="Direitos Autorais/DMCA"
             className="flex items-center gap-2 p-2 w-full rounded-lg hover:bg-vod transition-colors duration-150 ease-out text-secondary text-base font-medium focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-vod"
           >
             <CopyrightIcon size={16} />
-            <span>Direitos Autorais/DMCA</span>
+            {!isCollapsed && <span>Direitos Autorais/DMCA</span>}
           </a>
-          <button className="flex items-center gap-2 p-2 w-full rounded-lg hover:bg-vod transition-colors duration-150 ease-out text-secondary text-base font-medium cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-vod">
-            <ChevronsUpDown size={16} />
-            <span>Expandir/Recolher</span>
+          <button
+            onClick={() => setIsCollapsed(prev => !prev)}
+            title="Expandir/Recolher"
+            className="flex items-center gap-2 p-2 w-full rounded-lg hover:bg-vod transition-colors duration-150 ease-out text-secondary text-base font-medium cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-vod"
+          >
+            <ChevronsUpDown
+              size={16}
+              className={`${isCollapsed ? 'rotate-90' : ''} transition-transform duration-200`}
+            />
+            {!isCollapsed && <span>Expandir/Recolher</span>}
           </button>
         </div>
       </div>

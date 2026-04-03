@@ -1,14 +1,37 @@
 'use client'
+import { useState, useTransition } from 'react'
 import Image from 'next/image'
 import { Star, Heart } from 'lucide-react'
 import { Channel } from '@/lib/types'
+import { toggleFollow } from '@/lib/supabase/actions/channel'
 
 interface ChannelHeaderProps {
   channel: Channel
   bannerUrl?: string
+  isFollowing?: boolean
+  isLoggedIn?: boolean
 }
 
-export default function ChannelHeader({ channel, bannerUrl }: ChannelHeaderProps) {
+export default function ChannelHeader({ channel, bannerUrl, isFollowing: initialIsFollowing, isLoggedIn }: ChannelHeaderProps) {
+  const [following, setFollowing] = useState(initialIsFollowing ?? false)
+  const [isPending, startTransition] = useTransition()
+
+  function handleFollowClick() {
+    if (!isLoggedIn) {
+      window.location.href = '/login'
+      return
+    }
+    const optimistic = !following
+    setFollowing(optimistic)
+    startTransition(async () => {
+      try {
+        await toggleFollow(channel.id, channel.username.replace('@', ''))
+      } catch {
+        setFollowing(!optimistic)
+      }
+    })
+  }
+
   return (
     <div className="flex flex-col">
 
@@ -59,11 +82,17 @@ export default function ChannelHeader({ channel, bannerUrl }: ChannelHeaderProps
               <Star size={16} />
               <span className="font-primary font-bold text-[14px]">Assinar</span>
             </button>
-            <button className="bg-surface-secondary border border-vod rounded-sm
-                               size-[36px] flex items-center justify-center
-                               hover:border-accent transition-colors duration-150 ease-out
-                               focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50">
-              <Heart size={20} className="text-primary" />
+            <button
+              onClick={handleFollowClick}
+              disabled={isPending}
+              title={following ? 'Deixar de seguir' : 'Seguir'}
+              className={`bg-surface-secondary border rounded-sm size-[36px] flex items-center justify-center
+                transition-colors duration-150 ease-out
+                ${following ? 'border-accent' : 'border-vod hover:border-accent'}
+                disabled:opacity-50 disabled:cursor-not-allowed
+                focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50`}
+            >
+              <Heart size={20} className={following ? 'text-accent fill-accent' : 'text-primary'} />
             </button>
           </div>
         </div>

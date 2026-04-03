@@ -130,6 +130,38 @@ export async function getLikedVideos(userId: string): Promise<Video[]> {
   }
 }
 
+export async function getIsLiked(userId: string, videoId: string): Promise<boolean> {
+  try {
+    const supabase = await createClient()
+    const { data } = await supabase
+      .from('video_likes')
+      .select('id')
+      .eq('user_id', userId)
+      .eq('video_id', videoId)
+      .limit(1)
+      .maybeSingle()
+    return !!data
+  } catch {
+    return false
+  }
+}
+
+export async function getIsFollowing(userId: string, channelId: string): Promise<boolean> {
+  try {
+    const supabase = await createClient()
+    const { data } = await supabase
+      .from('follows')
+      .select('id')
+      .eq('user_id', userId)
+      .eq('channel_id', channelId)
+      .limit(1)
+      .maybeSingle()
+    return !!data
+  } catch {
+    return false
+  }
+}
+
 export async function getReferrals(userId: string) {
   try {
     const supabase = await createClient()
