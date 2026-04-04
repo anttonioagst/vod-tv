@@ -14,6 +14,10 @@ export const mockVideos: Video[] = [
     isExclusive: true,
     views: 12400,
     createdAt: '2026-03-10',
+    source: 'upload',
+    liveSessionId: null,
+    hlsUrl: null,
+    mp4Url: null,
   },
   {
     id: '2',
@@ -28,6 +32,10 @@ export const mockVideos: Video[] = [
     isExclusive: false,
     views: 8900,
     createdAt: '2026-03-12',
+    source: 'upload',
+    liveSessionId: null,
+    hlsUrl: null,
+    mp4Url: null,
   },
   {
     id: '3',
@@ -42,6 +50,10 @@ export const mockVideos: Video[] = [
     isExclusive: true,
     views: 5600,
     createdAt: '2026-03-15',
+    source: 'upload',
+    liveSessionId: null,
+    hlsUrl: null,
+    mp4Url: null,
   },
   {
     id: '4',
@@ -56,6 +68,10 @@ export const mockVideos: Video[] = [
     isExclusive: false,
     views: 3200,
     createdAt: '2026-03-18',
+    source: 'upload',
+    liveSessionId: null,
+    hlsUrl: null,
+    mp4Url: null,
   },
   {
     id: '5',
@@ -70,6 +86,10 @@ export const mockVideos: Video[] = [
     isExclusive: true,
     views: 7100,
     createdAt: '2026-03-19',
+    source: 'upload',
+    liveSessionId: null,
+    hlsUrl: null,
+    mp4Url: null,
   },
   {
     id: '6',
@@ -84,6 +104,10 @@ export const mockVideos: Video[] = [
     isExclusive: false,
     views: 2800,
     createdAt: '2026-03-20',
+    source: 'upload',
+    liveSessionId: null,
+    hlsUrl: null,
+    mp4Url: null,
   },
   {
     id: '7',
@@ -98,6 +122,10 @@ export const mockVideos: Video[] = [
     isExclusive: true,
     views: 9900,
     createdAt: '2026-03-21',
+    source: 'upload',
+    liveSessionId: null,
+    hlsUrl: null,
+    mp4Url: null,
   },
 ]
 

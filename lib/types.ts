@@ -1,3 +1,7 @@
+export type VideoSource = 'upload' | 'live_recording'
+
+export type LiveSessionStatus = 'recording' | 'processing' | 'completed' | 'failed'
+
 export type Video = {
   id: string
   title: string
@@ -11,6 +15,10 @@ export type Video = {
   isExclusive: boolean       // mapeia is_exclusive
   views: number              // mapeia view_count
   createdAt: string          // mapeia published_at
+  source: VideoSource
+  liveSessionId: string | null
+  hlsUrl: string | null
+  mp4Url: string | null
   channel?: Channel          // objeto completo do canal (disponível em queries com JOIN)
 }
 
@@ -30,6 +38,31 @@ export type User = {
   name: string
   avatar: string
   email: string
+}
+
+export type LiveSession = {
+  id: string
+  channelId: string
+  platform: string
+  streamTitle: string | null
+  startedAt: string | null
+  endedAt: string | null
+  status: LiveSessionStatus
+  recordingPath: string | null
+  hlsUrl: string | null
+  videoId: string | null
+  createdAt: string
+}
+
+export type CreatorChannel = {
+  id: string
+  channelId: string
+  platform: string
+  platformUserId: string
+  platformUsername: string
+  twitchWebhookId: string | null
+  autoRecord: boolean
+  createdAt: string
 }
 
 // Helper: converte duration_seconds em "H:MM:SS" ou "M:SS"

@@ -1,5 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
-import { Video, Channel, formatDuration } from '@/lib/types'
+import { Video, VideoSource, Channel, formatDuration } from '@/lib/types'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function mapVideoFromJoin(row: any): Video {
@@ -18,6 +18,10 @@ function mapVideoFromJoin(row: any): Video {
     isExclusive: v.is_exclusive,
     views: v.view_count,
     createdAt: v.published_at,
+    source: (v.source ?? 'upload') as VideoSource,
+    liveSessionId: v.live_session_id ?? null,
+    hlsUrl: v.hls_url ?? null,
+    mp4Url: v.mp4_url ?? null,
   }
 }
 
