@@ -63,7 +63,19 @@
       "mcp__vercel__list_deployments",
       "mcp__vercel__get_deployment_build_logs",
       "mcp__vercel__deploy_to_vercel",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "mcp__vercel__get_deployment",
+      "Bash(npx supabase:*)",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); mcps=d.get\\('mcpServers',{}\\); print\\(json.dumps\\(list\\(mcps.keys\\(\\)\\), indent=2\\)\\)\")",
+      "Bash(npx skills:*)",
+      "WebFetch(domain:hermes-agent.nousresearch.com)",
+      "WebFetch(domain:vody.gg)",
+      "Bash(python \".claude/skills/ui-ux-pro-max/scripts/search.py\" \"VOD streaming video platform dark mode entertainment sidebar\" --design-system -p \"Vod.TV\")",
+      "Bash(python \".claude/skills/ui-ux-pro-max/scripts/search.py\" \"sidebar scrollbar navigation dark\" --domain ux)",
+      "Bash(python \".claude/skills/ui-ux-pro-max/scripts/search.py\" \"hover animation transition loading skeleton\" --domain ux)",
+      "Bash(python -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\([k for k in {**d.get\\('dependencies',{}\\), **d.get\\('devDependencies',{}\\)} if 'scrollbar' in k.lower\\(\\)]\\)\")",
+      "Bash(sed:*)",
+      "Bash(echo \"has_modules=$?\")"
     ],
     "ask": [
       "Bash(git commit*)",

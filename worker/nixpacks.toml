@@ -1,0 +1,14 @@
+# Railway usa Nixpacks para build.
+# Instala streamlink e ffmpeg no ambiente de produção.
+
+[phases.setup]
+nixPkgs = ["nodejs_20", "streamlink", "ffmpeg"]
+
+[phases.install]
+cmds = ["npm ci"]
+
+[phases.build]
+cmds = ["npm run build"]
+
+[start]
+cmd = "npm start"

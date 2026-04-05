@@ -39,3 +39,16 @@ yarn-error.log*
 next-env.d.ts
 
 .vercel
+
+# IDE configs
+.cursor/
+.junie/
+.kiro/
+.windsurf/
+.obsidian/
+
+# supabase temp
+supabase/.temp/
+
+# worker deps
+worker/node_modules/
