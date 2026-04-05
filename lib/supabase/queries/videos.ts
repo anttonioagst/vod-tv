@@ -20,6 +20,7 @@ function mapVideo(row: any): Video {
     liveSessionId: row.live_session_id ?? null,
     hlsUrl: row.hls_url ?? null,
     mp4Url: row.mp4_url ?? null,
+    description: row.description ?? null,
   }
 }
 
@@ -96,7 +97,7 @@ export async function getRelatedVideos(channelId: string, excludeId: string): Pr
       .eq('channel_id', channelId)
       .neq('id', excludeId)
       .order('published_at', { ascending: false })
-      .limit(4)
+      .limit(10)
 
     if (error) throw error
     return (data ?? []).map(mapVideo)

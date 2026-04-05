@@ -22,6 +22,7 @@ function mapVideoFromJoin(row: any): Video {
     liveSessionId: v.live_session_id ?? null,
     hlsUrl: v.hls_url ?? null,
     mp4Url: v.mp4_url ?? null,
+    description: v.description ?? null,
   }
 }
 

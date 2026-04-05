@@ -19,6 +19,7 @@ export type Video = {
   liveSessionId: string | null
   hlsUrl: string | null
   mp4Url: string | null
+  description: string | null
   channel?: Channel          // objeto completo do canal (disponível em queries com JOIN)
 }
 

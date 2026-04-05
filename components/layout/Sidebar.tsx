@@ -4,7 +4,7 @@ import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Clock, Gift, Link2, Mail, ChevronsUpDown } from 'lucide-react'
+import { Clock, Gift, Link2, Mail, ChevronsUpDown, Radio } from 'lucide-react'
 import SvgIcon from '@/components/ui/SvgIcon'
 
 type IconProps = { size?: number; className?: string }
@@ -43,6 +43,7 @@ const EXPLORE_NAV: NavItem[] = [
   { label: 'Início',   href: '/home',     icon: HomeIcon },
   { label: 'Em Alta',  href: '/trending', icon: TrendingIcon },
   { label: 'Canais',   href: '/channels', icon: ChannelsIcon },
+  { label: 'Lives',    href: '/lives',    icon: Radio },
 ]
 
 const YOU_NAV: NavItem[] = [
@@ -99,10 +100,20 @@ export default function Sidebar({ isLoggedIn = false, followedChannels, classNam
     : FEATURED_CHANNELS
 
   return (
-    <aside className={`${isCollapsed ? 'w-[64px]' : 'w-[255px]'} transition-all duration-200 h-screen flex flex-col bg-surface border-r border-vod overflow-y-auto shrink-0${className ? ` ${className}` : ''}`}>
-      {/* Logo */}
-      <div className="p-4 flex items-center">
+    <aside className={`${isCollapsed ? 'w-[64px]' : 'w-[255px]'} transition-all duration-200 h-screen flex flex-col bg-surface border-r border-vod overflow-y-auto scrollbar-hide shrink-0${className ? ` ${className}` : ''}`}>
+      {/* Logo + collapse toggle */}
+      <div className={`h-14 flex items-center shrink-0 ${isCollapsed ? 'justify-center px-2' : 'justify-between px-4'}`}>
         {!isCollapsed && <Image src="/icons/vod-logo.svg" alt="Vod TV" width={52} height={36} />}
+        <button
+          onClick={() => setIsCollapsed(prev => !prev)}
+          title={isCollapsed ? 'Expandir' : 'Recolher'}
+          className="p-1.5 rounded-lg hover:bg-vod transition-colors duration-150 text-secondary cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-vod"
+        >
+          <ChevronsUpDown
+            size={16}
+            className={`${isCollapsed ? 'rotate-90' : ''} transition-transform duration-200`}
+          />
+        </button>
       </div>
 
       {/* Explorar */}
@@ -213,17 +224,6 @@ export default function Sidebar({ isLoggedIn = false, followedChannels, classNam
             <CopyrightIcon size={16} />
             {!isCollapsed && <span>Direitos Autorais/DMCA</span>}
           </a>
-          <button
-            onClick={() => setIsCollapsed(prev => !prev)}
-            title="Expandir/Recolher"
-            className="flex items-center gap-2 p-2 w-full rounded-lg hover:bg-vod transition-colors duration-150 ease-out text-secondary text-base font-medium cursor-pointer focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-vod"
-          >
-            <ChevronsUpDown
-              size={16}
-              className={`${isCollapsed ? 'rotate-90' : ''} transition-transform duration-200`}
-            />
-            {!isCollapsed && <span>Expandir/Recolher</span>}
-          </button>
         </div>
       </div>
     </aside>

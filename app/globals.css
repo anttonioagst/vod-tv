@@ -17,3 +17,32 @@ body {
   background-color: var(--color-bg-primary);
   color: var(--color-text-primary);
 }
+
+/* ── Scrollbar global — thin, dark, unobtrusive ── */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #3e3e3e;
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #525252;
+}
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #3e3e3e transparent;
+}
+
+/* ── Scrollbar oculto (sidebar) ── */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

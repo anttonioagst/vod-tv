@@ -1,6 +1,51 @@
 import { createClient } from '@/lib/supabase/server'
 import { LiveSession, Video, VideoSource, formatDuration } from '@/lib/types'
 
+export type LiveWithChannel = {
+  sessionId: string
+  streamTitle: string | null
+  startedAt: string | null
+  channelId: string
+  channelName: string
+  channelSlug: string
+  channelAvatar: string
+}
+
+/** Lives ativas com dados do canal — para a página /lives */
+export async function getLivesWithChannels(): Promise<LiveWithChannel[]> {
+  try {
+    const supabase = await createClient()
+    const { data, error } = await supabase
+      .from('live_sessions')
+      .select(`
+        id,
+        stream_title,
+        started_at,
+        channels(id, name, slug, avatar_url)
+      `)
+      .eq('status', 'recording')
+      .order('started_at', { ascending: false })
+
+    if (error) throw error
+
+    return (data ?? []).map((row) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const ch = (row as any).channels ?? {}
+      return {
+        sessionId: row.id,
+        streamTitle: row.stream_title ?? null,
+        startedAt: row.started_at ?? null,
+        channelId: ch.id ?? '',
+        channelName: ch.name ?? '',
+        channelSlug: ch.slug ?? '',
+        channelAvatar: ch.avatar_url ?? '',
+      }
+    })
+  } catch {
+    return []
+  }
+}
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function mapLiveSession(row: any): LiveSession {
   return {
@@ -92,6 +137,7 @@ export async function getVideoWithLiveData(
       liveSessionId: data.live_session_id ?? null,
       hlsUrl: data.hls_url ?? null,
       mp4Url: data.mp4_url ?? null,
+      description: data.description ?? null,
     }
 
     // Supabase pode retornar array ou objeto dependendo da direção do FK

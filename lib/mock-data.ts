@@ -18,6 +18,7 @@ export const mockVideos: Video[] = [
     liveSessionId: null,
     hlsUrl: null,
     mp4Url: null,
+    description: null,
   },
   {
     id: '2',
@@ -36,6 +37,7 @@ export const mockVideos: Video[] = [
     liveSessionId: null,
     hlsUrl: null,
     mp4Url: null,
+    description: null,
   },
   {
     id: '3',
@@ -54,6 +56,7 @@ export const mockVideos: Video[] = [
     liveSessionId: null,
     hlsUrl: null,
     mp4Url: null,
+    description: null,
   },
   {
     id: '4',
@@ -72,6 +75,7 @@ export const mockVideos: Video[] = [
     liveSessionId: null,
     hlsUrl: null,
     mp4Url: null,
+    description: null,
   },
   {
     id: '5',
@@ -90,6 +94,7 @@ export const mockVideos: Video[] = [
     liveSessionId: null,
     hlsUrl: null,
     mp4Url: null,
+    description: null,
   },
   {
     id: '6',
@@ -108,6 +113,7 @@ export const mockVideos: Video[] = [
     liveSessionId: null,
     hlsUrl: null,
     mp4Url: null,
+    description: null,
   },
   {
     id: '7',
@@ -126,6 +132,7 @@ export const mockVideos: Video[] = [
     liveSessionId: null,
     hlsUrl: null,
     mp4Url: null,
+    description: null,
   },
 ]
 

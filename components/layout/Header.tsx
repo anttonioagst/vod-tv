@@ -42,9 +42,12 @@ export default function Header({ isLoggedIn = false, user }: HeaderProps) {
   }
 
   return (
-    <header className="h-[56px] bg-surface border-b border-vod flex items-center justify-between px-[10px] shrink-0">
-      {/* Search Bar */}
-      <div className="flex w-[568px] h-[42px] opacity-[0.67] focus-within:opacity-100 transition-opacity">
+    <header className="h-[56px] bg-surface border-b border-vod grid grid-cols-[1fr_568px_1fr] items-center px-4 shrink-0">
+      {/* Left spacer */}
+      <div />
+
+      {/* Search Bar — centered */}
+      <div className="flex h-[42px] opacity-[0.67] focus-within:opacity-100 transition-opacity">
         <input
           type="text"
           placeholder="Pesquisar"
@@ -55,8 +58,8 @@ export default function Header({ isLoggedIn = false, user }: HeaderProps) {
         </button>
       </div>
 
-      {/* Actions */}
-      <div className="flex items-center gap-2">
+      {/* Actions — right aligned */}
+      <div className="flex items-center gap-2 justify-end">
         {isLoggedIn ? (
           <>
             <button className="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-vod transition-colors text-secondary">

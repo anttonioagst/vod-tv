@@ -33,3 +33,26 @@ export async function toggleLike(videoId: string): Promise<void> {
   revalidatePath(`/watch/${videoId}`)
   revalidatePath('/liked')
 }
+
+export async function toggleWatchLater(videoId: string): Promise<void> {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) throw new Error('Unauthenticated')
+
+  const { data: existing } = await supabase
+    .from('watch_later')
+    .select('id')
+    .eq('user_id', user.id)
+    .eq('video_id', videoId)
+    .maybeSingle()
+
+  if (existing) {
+    await supabase.from('watch_later').delete()
+      .eq('user_id', user.id)
+      .eq('video_id', videoId)
+  } else {
+    await supabase.from('watch_later').insert({ user_id: user.id, video_id: videoId })
+  }
+
+  revalidatePath('/watch-later')
+}
