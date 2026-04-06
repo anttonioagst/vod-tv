@@ -103,7 +103,11 @@ export default function Sidebar({ isLoggedIn = false, followedChannels, classNam
     <aside className={`${isCollapsed ? 'w-[64px]' : 'w-[255px]'} transition-all duration-200 h-screen flex flex-col bg-surface border-r border-vod overflow-y-auto scrollbar-hide shrink-0${className ? ` ${className}` : ''}`}>
       {/* Logo + collapse toggle */}
       <div className={`h-14 flex items-center shrink-0 ${isCollapsed ? 'justify-center px-2' : 'justify-between px-4'}`}>
-        {!isCollapsed && <Image src="/icons/vod-logo.svg" alt="Vod TV" width={52} height={36} />}
+        {!isCollapsed && (
+          <Link href="/home" className="shrink-0 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-vod rounded-sm">
+            <Image src="/icons/vod-logo.svg" alt="Vod TV" width={52} height={36} />
+          </Link>
+        )}
         <button
           onClick={() => setIsCollapsed(prev => !prev)}
           title={isCollapsed ? 'Expandir' : 'Recolher'}

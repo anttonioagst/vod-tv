@@ -21,5 +21,7 @@ export async function toggleFollow(channelId: string, channelSlug: string): Prom
   }
 
   revalidatePath(`/channel/${channelSlug}`)
+  revalidatePath('/channels')
+  revalidatePath('/following')
   revalidatePath('/')
 }

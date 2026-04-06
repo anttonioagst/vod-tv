@@ -1,18 +1,21 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { UserPlus } from 'lucide-react'
 import { Channel } from '@/lib/types'
+import FollowButton from '@/components/channel/FollowButton'
 
 interface ChannelListItemProps {
   channel: Channel
+  isLoggedIn?: boolean
 }
 
-export default function ChannelListItem({ channel }: ChannelListItemProps) {
+export default function ChannelListItem({ channel, isLoggedIn = false }: ChannelListItemProps) {
+  const slug = channel.username.replace('@', '')
+
   return (
     <div className="flex items-center justify-between border-b border-vod py-4 px-6 w-full">
       {/* Esquerda: avatar + info */}
       <Link
-        href={`/channel/${channel.username.replace('@', '')}`}
+        href={`/channel/${slug}`}
         className="flex items-center gap-4 group"
       >
         <div className="relative w-[110px] h-[110px] rounded-lg overflow-hidden shrink-0">
@@ -43,11 +46,13 @@ export default function ChannelListItem({ channel }: ChannelListItemProps) {
         </div>
       </Link>
 
-      {/* Direita: botão seguir */}
-      <button className="flex items-center gap-2 border border-vod rounded-lg px-3 py-[9px] text-white hover:border-accent hover:text-accent transition-colors shrink-0">
-        <UserPlus size={16} />
-        <span className="font-medium text-base">Seguir</span>
-      </button>
+      {/* Direita: botão seguir funcional */}
+      <FollowButton
+        channelId={channel.id}
+        channelSlug={slug}
+        initialIsFollowing={channel.isFollowing ?? false}
+        isLoggedIn={isLoggedIn}
+      />
     </div>
   )
 }

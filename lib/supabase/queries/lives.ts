@@ -99,21 +99,19 @@ export async function getLiveSessionByChannel(channelId: string): Promise<LiveSe
 }
 
 /**
- * Busca vídeo + live_session associada em uma única query.
- * Usado na página /watch/[id] para decidir entre VideoPlayer e PaywallCard.
+ * Busca vídeo + live_session associada em duas queries separadas.
+ * Separado para que a página /watch/[id] funcione mesmo se as migrations
+ * 012/013 (live_sessions + colunas live nos vídeos) ainda não foram aplicadas.
  */
 export async function getVideoWithLiveData(
   videoId: string
 ): Promise<(Video & { liveSession: LiveSession | null }) | null> {
   try {
     const supabase = await createClient()
+
     const { data, error } = await supabase
       .from('videos')
-      .select(`
-        *,
-        channels(name, avatar_url, slug),
-        live_sessions(id, status, hls_url, stream_title, started_at)
-      `)
+      .select('*, channels(name, avatar_url, slug)')
       .eq('id', videoId)
       .single()
 
@@ -140,12 +138,22 @@ export async function getVideoWithLiveData(
       description: data.description ?? null,
     }
 
-    // Supabase pode retornar array ou objeto dependendo da direção do FK
-    const liveSessionRow = Array.isArray(data.live_sessions)
-      ? (data.live_sessions[0] ?? null)
-      : (data.live_sessions ?? null)
+    // Busca live_session separadamente — falha silenciosa se tabela não existir
+    let liveSession: LiveSession | null = null
+    if (video.liveSessionId) {
+      try {
+        const { data: lsData } = await supabase
+          .from('live_sessions')
+          .select('*')
+          .eq('id', video.liveSessionId)
+          .maybeSingle()
+        liveSession = lsData ? mapLiveSession(lsData) : null
+      } catch {
+        // migration 012 pode não ter sido aplicada ainda
+      }
+    }
 
-    return { ...video, liveSession: liveSessionRow ? mapLiveSession(liveSessionRow) : null }
+    return { ...video, liveSession }
   } catch {
     return null
   }
