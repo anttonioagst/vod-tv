@@ -1,0 +1,15 @@
+# Worker Node.js (Railway) — não vai para Vercel
+worker/
+
+# Vault Obsidian — notas do projeto
+vault/
+
+# Skills e scripts de IA (não fazem parte do app Next.js)
+.agent/
+.claude/
+
+# Documentação interna
+PRD*.md
+COMPETITIVE_GAPS.md
+DESIGN_AUDIT.md
+AUDIT.md
