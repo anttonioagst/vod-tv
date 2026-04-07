@@ -1,0 +1,14 @@
+# Nixpacks config para Railway — worker de gravação de lives
+# Instala Node.js, streamlink e ffmpeg, depois build/start do worker
+
+[phases.setup]
+nixPkgs = ["nodejs_20", "streamlink", "ffmpeg"]
+
+[phases.install]
+cmds = ["npm ci --prefix worker"]
+
+[phases.build]
+cmds = ["npm run build --prefix worker"]
+
+[start]
+cmd = "node worker/dist/index.js"
